@@ -1,0 +1,101 @@
+body{
+  background:black;
+}
+
+div#preload{
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  text-align: center;
+  font-size: 42px;
+  bottom: 36%;
+  background: black;
+}
+
+#slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.page {
+    width: 100%;
+    height: 100%;
+}
+
+.bgImg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.abImg {
+    display: block;
+    position: absolute;
+}
+.wImg{
+  display: block;
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.clipView {
+    overflow-y: scroll;
+    -webkit-overflow-scrolling:touch;
+}
+
+img#next {
+    position: absolute;
+    z-index: 1;
+    width: 8%;
+    right: 4%;
+    top:49%;
+}
+img.touchMove {
+    position: absolute;
+    width: 20%;
+    left: 40%;
+    bottom: 0%;
+    opacity: 0.2;
+}
+
+
+img#logo {
+    width: 100%;
+    height: 100%;
+}
+
+#num {
+    color: #000;
+    font-size: 24px;
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    position: absolute;
+    width: 100%;
+    bottom: 10%;
+}
+
+div#loadText {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    bottom: 5%;
+    color: #0d0c0c;
+    font-size: 16px;
+    letter-spacing: 2px;
+}
+
+img#musicBtn {
+    position: absolute;
+    top: 2%;
+    right: 3%;
+    width: 10%;
+}
