@@ -55,6 +55,13 @@ function bg2Run(obj,dir){
 }
 
 
+/* 设置元素的移动方案，添加在Ticker上进行RAF循环,定位随机*/
+function bg1RunRandom(obj,dir){
+  obj.y += dir;
+  if(obj.y>=obj.limitY){
+    obj.y = Math.random()*1030*-1
+  };
+}
 
 /*control layer 设置角色不能溢出到屏幕之外*/
 function dragOutSide(obj){
@@ -69,3 +76,22 @@ function dragOutSide(obj){
     obj.y = 1030 - (0 + obj.height / 2);
   };
 };
+
+/*返回一个对象rect*/
+function rectAngle(obj){
+    obj.minX = obj.x;
+    obj.maxX = obj.x + obj.width;
+    obj.minY = obj.y;
+    obj.maxY = obj.y + obj.height;
+};
+
+/*两个对象的碰撞检测*/
+function toHit(obj1,obj2){
+  let hit = false;
+  if(obj1.minX > obj2.maxX || obj1.maxX < obj2.minX || obj1.maxY < obj2.minY || obj1.minY > obj2.maxY){
+    hit = false;
+  }else {
+    hit = true;
+  }
+  return hit;
+}
