@@ -56,7 +56,7 @@ function bg2Run(obj,dir){
 
 
 /* 设置元素的移动方案，添加在Ticker上进行RAF循环,定位随机*/
-function bg1RunRandom(obj,dir){
+function bg1RunRandom(obj,dir,callback){
   obj.y += dir;
   if(obj.y>=obj.limitY){
     obj.y = Math.random()*1030*-1
@@ -85,10 +85,21 @@ function rectAngle(obj){
     obj.maxY = obj.y + obj.height;
 };
 
-/*两个对象的碰撞检测*/
+/*两个对象的碰撞检测,碰撞检测矩形*/
 function toHit(obj1,obj2){
   let hit = false;
-  if(obj1.minX > obj2.maxX || obj1.maxX < obj2.minX || obj1.maxY < obj2.minY || obj1.minY > obj2.maxY){
+  if(obj1.x > obj2.x + obj2.width || obj1.x + obj1.width < obj2.x || obj1.y + obj1.height < obj2.y || obj1.y > obj2.y + obj2.height){
+    hit = false;
+  }else {
+    hit = true;
+  }
+  return hit;
+}
+
+/*两个对象的碰撞检测,自定义对象1的碰撞检测矩形*/
+function toCustomHit(obj1,obj2){
+  let hit = false;
+  if(obj1.dx > obj2.x + obj2.width || obj1.dx + obj1.dwidth < obj2.x || obj1.dy + obj1.dheight < obj2.y || obj1.dy > obj2.y + obj2.height){
     hit = false;
   }else {
     hit = true;
