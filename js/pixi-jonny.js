@@ -14,6 +14,32 @@ class button extends PIXI.Sprite{
   }
 };
 
+/*元素拖拽必须保留在视图中*/
+
+function disableOutside(obj,app){
+  if(obj.x <= 0 && obj.y <= 0){
+    obj.x = 0;
+    obj.y = 0;
+  }else if(obj.x >= app.screen.width - obj.width && obj.y <= 0){
+    obj.x = app.screen.width - obj.width;
+    obj.y = 0;
+  }else if(obj.x >= app.screen.width - obj.width && obj.y >= app.screen.height - obj.height){
+    obj.x = app.screen.width - obj.width;
+    obj.y = app.screen.height - obj.height;
+  }else if(obj.x <= 0 && obj.y >= app.screen.height - obj.height){
+    obj.x = 0;
+    obj.y = app.screen.height - obj.height;
+  }else if(obj.x <= 0){
+    obj.x = 0;
+  }else if(obj.x >= app.screen.width - obj.width){
+    obj.x = app.screen.width - obj.width;
+  }else if(obj.y <= 0){
+    obj.y = 0;
+  }else if(obj.y >= app.screen.height - obj.height){
+    obj.y = app.screen.height - obj.height;
+  };
+}
+
 
 /*创建隐藏的图片并且包含位置移动*/
 class aniReady extends PIXI.Sprite{

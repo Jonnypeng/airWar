@@ -23,15 +23,18 @@ function init(){
   var bg,plane,zidan;
   var waixings,waixin_fps;
   var plane,plane_fps,planeBomb_fps;
+
   var paopaos;
   var zidanInterval;
   var scoreConatiner,fenshu_fps,text,scoreView;
   var score = 0;
 
+  var pi,pia,die;
+
   var game = {
     'init':function (){
       var loader = new PIXI.loaders.Loader();
-      loader.add(['images/cover.png','images/end.png','images/paper_1.jpg','images/paper_2.jpg','images/return.png','images/zidan.json','images/fenshu.json','images/plane.json','images/waixin_01.png','images/waixin_02.png','images/waixin_03.png','images/shitou.jpeg']);
+      loader.add(['images/cover.png','images/end.png','images/paper_1.jpg','images/paper_2.jpg','images/return.png','images/zidan.json','images/fenshu.json','images/plane.json','images/waixin_01.png','images/waixin_02.png','images/waixin_03.png','images/shitou.jpeg','sounds/pi.mp3','sounds/pia.mp3','sounds/die.mp3']);
       loader.on('progress',function (load,res){
         console.log(load.progress);
         $("#num").html(Math.floor(load.progress) + '%');
@@ -51,6 +54,11 @@ function init(){
       });
     },
     'war':function (){
+
+        pi = PIXI.sound.Sound.from('sounds/pi.mp3');
+        pia = PIXI.sound.Sound.from('sounds/pia.mp3');
+        die = PIXI.sound.Sound.from('sounds/die.mp3');
+
         bg = new PIXI.Container();
         bg.top = new PIXI.Sprite.fromImage('images/paper_1.jpg');
         bg.mid = new PIXI.Sprite.fromImage('images/paper_2.jpg');
@@ -106,6 +114,8 @@ function init(){
         plane.position.y = app.screen.height - plane.height - 10;
         plane.dx = plane.x + 28.5;
         plane.dy = plane.y;
+        plane.width = 81;
+        plane.height = 121;
         plane.dwidth = 23;
         plane.dheight = 83;
 
@@ -118,7 +128,7 @@ function init(){
 
         var speed = 1;
 
-        for(let i = 0;i<5;i++){
+        for(let i = 0;i<9;i++){
           let paopao = new PIXI.Sprite();
           paopao.texture = new PIXI.Texture.fromImage('images/shitou.jpeg');
           paopao.position = new PIXI.Point(Math.random()*540,Math.random()*800);
@@ -173,11 +183,13 @@ function init(){
             };
             if(zidanHit){
               if(waixings.children[index].hit == false){
+              waixings.children[index].hit = true;
+              pia.play();
               game.fenshu();
-              waixings.children[index].hit == true;
               }
               zidan.y = -100;
               waixings.children[index].y = 1040;
+              waixings.children[index].hit = false;
             }
         };
 
@@ -210,7 +222,10 @@ function init(){
           'type':'quadratic',
           'values':zidan.points
         },
-        alpha:1
+        alpha:1,
+        onStart:function (){
+          pi.play();
+        }
       });
     },
     'control':function (plane){
@@ -229,6 +244,9 @@ function init(){
         if(this.dragging){
           this.position.x = event.data.global.x - this.width/2;
           this.position.y = event.data.global.y - this.height/2;
+
+          disableOutside(plane,app);
+
           this.dx = plane.x + 28.5;
           this.dy = plane.y;
         };
@@ -252,6 +270,7 @@ function init(){
       }
     },
     'gameover':function (){
+      die.play();
       app.ticker.stop();
       clearInterval(zidanInterval);
       app.stage.removeChild(paopaos,waixings,zidan,plane);
@@ -273,7 +292,7 @@ function init(){
 
       returnPng.interactive = true;
       returnPng.on('pointertap',function (){
-        location.reload();  
+        location.reload();
       });
     }
   };
